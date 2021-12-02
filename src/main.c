@@ -1,8 +1,9 @@
-#include "./my.h/my.h"
+#include "../my.h/my.h"
 
 int main(void)
 {
-    my_cat("Makefile");
+    my_putstr("good");
+    return 0;
 }
 
 

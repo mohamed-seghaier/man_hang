@@ -1,4 +1,4 @@
-#include "./my.h/my.h"
+#include "../my.h/my.h"
 
 
 

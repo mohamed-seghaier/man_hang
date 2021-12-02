@@ -1,11 +1,12 @@
 SRC	=	./src/main.c		\
 		./utils/utils.c		\
+		./utils/inputs_f.c		\
 
 OBJ	=	$(SRC:.c=.o)
 
 FLAGS = -Wall -Werror -Wextra
 
-NAME	=	read
+NAME	=	man_hang
 
 all:	$(NAME)
 
