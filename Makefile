@@ -1,6 +1,8 @@
-SRC	=	./src/main.c		\
-		./utils/utils.c		\
-		./utils/inputs_f.c		\
+SRC	=	./src/main.c				\
+		./src/errors_handler.c		\
+		./utils/string.c			\
+		./utils/inputs_f.c			\
+		./utils/files_handler.c		\
 
 OBJ	=	$(SRC:.c=.o)
 

@@ -10,30 +10,22 @@
 #include <fcntl.h>
 
 
+#include "../utils/utils.h"
+#include "../src/error.h"
+
+
 #define TRUE 1
 #define FALSE 0
+#define EXIT exit(84)
+
+
+
 
 //main.c
-int main(void);
+int main(int, char **);
+void    help_handler(void);
+void    game(int, char **);
 
-//utils.c
-char *my_strcat(char *, char *);
-int count_space(char *);
-int count_malloc(char *, int);
-char **my_strtowordtab(char *);
-int my_strlen(char*);
-int my_getnbr(char *);
-void my_memset(char *, int);
-
-
-
-
-//inputs.c
-void    my_putchar(char);
-void    my_putstr(char *);
-void    my_putnbr(int);
-int my_showtab(char **);
-void    my_puterror(char *);
 
 
 #endif /* !MY_H_ */
