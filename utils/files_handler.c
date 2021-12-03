@@ -40,11 +40,24 @@ char
 //GetNextLine_end
 
 int
-is_a_file(char *filename) {
-	int	fd;
-    if ((fd = open(filename, O_RDONLY)) == -1)  {
-		close(fd);
+is_a_file(t_line *game_handler) {
+    if ((game_handler->fd = open(game_handler->filename, O_RDONLY)) == -1)  {
+		close(game_handler->fd);
 		error_functions_send(5);
-	} else close(fd);
+	}
+	return 1;
+}
+
+int
+is_file_empty(t_line *game_handler) {
+	struct stat st;
+
+	if (game_handler->filename == NULL) error_functions_send(7);
+	if ((stat(game_handler->filename, &st)) == -1) error_functions_send(6);
+	if ((game_handler->file_content = malloc (sizeof(char) * st.st_size)) == NULL) error_functions_send(7);
+	if (read(game_handler->fd, game_handler->file_content, st.st_size) == -1) error_functions_send(6);
+	game_handler->file_content = from_eol_to_space(game_handler->file_content);
+	game_handler->words = my_strtowordtab(game_handler->file_content);
+	select_a_word(game_handler);
 	return 1;
 }

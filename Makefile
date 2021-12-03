@@ -6,7 +6,7 @@ SRC	=	./src/main.c				\
 
 OBJ	=	$(SRC:.c=.o)
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -g
 
 NAME	=	man_hang
 

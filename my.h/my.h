@@ -18,13 +18,20 @@
 #define FALSE 0
 #define EXIT exit(84)
 
-
+typedef struct s_line {
+    char    *filename;
+    char    *file_content;
+    char    **words;
+    char    *word;
+    int char_number;
+    int fd;
+} t_line;
 
 
 //main.c
 int main(int, char **);
 void    help_handler(void);
-void    game(int, char **);
+void    game(t_line *);
 
 
 

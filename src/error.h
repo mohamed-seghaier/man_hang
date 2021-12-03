@@ -4,6 +4,8 @@
 #include "../my.h/my.h"
 
 typedef	void	(*ptab_t)(void);
+typedef struct s_line t_line;
+
 
 //errors_handler.c
 
@@ -17,6 +19,8 @@ void    error_from_argv(void);
 void    bad_argument(void);
 void    open_failure(void);
 void    not_a_file(void);
-int p_error(int, char **);
+void    read_failure(void);
+void    malloc_failure(void);
+int p_error(int, char **, t_line *);
 
 #endif /* !ERROR_H_ */

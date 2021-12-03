@@ -1,10 +1,34 @@
 #include "../my.h/my.h"
 
+
+
+void
+select_a_word(t_line *game_handler) {
+	int i = (tab_size(game_handler->words));
+    srand(time(NULL));
+    game_handler->word = game_handler->words[(rand() % i)];
+}
+
 int
-is_a_num(char *str) {
+tab_size(char **tab) {
+    int i = 0;
+    for (i = 0; tab[i]; i += 1);
+    return i;
+}
+
+char *
+from_eol_to_space(char *str) {
+    for(int i = 0; str[i]; i += 1) 
+        if (str[i] == '\n') str[i] = ' ';
+    return str;
+}
+
+int
+is_a_num(t_line *game_handler, char *str) {
     for (int i = 0; str[i]; i += 1) {
         if (str[i] < '0' || str[i] > '9') return 0;
     }
+    game_handler->char_number = my_getnbr(str);
     return 1;
 }
 
@@ -48,15 +72,15 @@ char
     int j = 0;
     char **res = NULL;
 
-    if ((res = malloc(sizeof(char *) * count_space(str) + 1)) == NULL) return NULL;
-    if ((res[j] = malloc(sizeof(char) * count_malloc(str, 0))) == NULL) return NULL;
+    if ((res = malloc(sizeof(char *) * count_space(str) + 1)) == NULL) error_functions_send(7);
+    if ((res[j] = malloc(sizeof(char) * count_malloc(str, 0))) == NULL) error_functions_send(7);
     for (; str[i]; i += 1) {
         if (str[i] != ' ') {
             res[j][idx] = str[i];
             idx += 1;
         } else {
             j += 1;
-            if ((res[j] = malloc(sizeof(char) * count_malloc(str, j))) == NULL) return NULL;
+            if ((res[j] = malloc(sizeof(char) * count_malloc(str, j))) == NULL) error_functions_send(7);
             idx = 0;
         }
     }
