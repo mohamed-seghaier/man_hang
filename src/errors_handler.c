@@ -20,7 +20,7 @@ error_handler(int argc, char **argv) {
 
 void
 error_functions_send(int error_n) {
-    ptab_t  error_tab[10];
+    ptab_t  error_tab[11];
 
     error_tab[0] = &too_less_arg_num;
     error_tab[1] = &too_much_arg_num;
@@ -31,8 +31,9 @@ error_functions_send(int error_n) {
     error_tab[6] = &read_failure;
     error_tab[7] = &malloc_failure;
     error_tab[8] = &size_number_error;
+    error_tab[9] = &bad_char;
     
-	error_tab[9] = NULL;
+	error_tab[10] = NULL;
 
     (*error_tab[error_n])();
 }
@@ -40,6 +41,12 @@ error_functions_send(int error_n) {
 void
 read_failure(void) {
     my_puterror("Erreur lors de la lecture de votre fichier. Veuillez vérifier son contenu.\n");
+    EXIT;
+}
+
+void
+bad_char(void) {
+    my_puterror("Espaces interdits dans le fichier.\n");
     EXIT;
 }
 

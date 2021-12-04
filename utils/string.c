@@ -18,8 +18,10 @@ tab_size(char **tab) {
 
 char *
 from_eol_to_space(char *str) {
-    for(int i = 0; str[i]; i += 1) 
+    for(int i = 0; str[i]; i += 1) {
+        if (str[i] == ' ') error_functions_send(9);
         if (str[i] == '\n') str[i] = ' ';
+    }
     return str;
 }
 

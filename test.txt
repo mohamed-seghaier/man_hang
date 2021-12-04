@@ -3,3 +3,5 @@ test
 toto
 tete
 armani
+exemplarité
+sapristi
