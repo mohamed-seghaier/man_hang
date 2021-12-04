@@ -29,6 +29,7 @@ is_a_num(t_line *game_handler, char *str) {
         if (str[i] < '0' || str[i] > '9') return 0;
     }
     game_handler->char_number = my_getnbr(str);
+    if (count_size_elem(game_handler) == 0) return 0;
     return 1;
 }
 

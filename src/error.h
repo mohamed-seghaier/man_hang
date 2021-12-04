@@ -21,6 +21,7 @@ void    open_failure(void);
 void    not_a_file(void);
 void    read_failure(void);
 void    malloc_failure(void);
+void    size_number_error(void);
 int p_error(int, char **, t_line *);
 
 #endif /* !ERROR_H_ */

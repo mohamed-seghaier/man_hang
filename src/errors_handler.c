@@ -6,9 +6,9 @@ int
 p_error(int argc, char **argv, t_line *game_handle) {
     if ((game_handle->filename = malloc(sizeof(char) * strlen(argv[1]) + 1)) == NULL) error_functions_send(7);
     if ((strcpy(game_handle->filename, argv[1])) == NULL) EXIT;
-    if (!is_a_num(game_handle, argv[2])) error_functions_send(2);
     if (!is_a_file(game_handle)) error_functions_send(3);
     if (!is_file_empty(game_handle)) error_functions_send(6);
+    if (!is_a_num(game_handle, argv[2])) error_functions_send(2);
     return 1;
 }
 
@@ -20,7 +20,7 @@ error_handler(int argc, char **argv) {
 
 void
 error_functions_send(int error_n) {
-    ptab_t  error_tab[9];
+    ptab_t  error_tab[10];
 
     error_tab[0] = &too_less_arg_num;
     error_tab[1] = &too_much_arg_num;
@@ -30,8 +30,9 @@ error_functions_send(int error_n) {
     error_tab[5] = &open_failure;
     error_tab[6] = &read_failure;
     error_tab[7] = &malloc_failure;
+    error_tab[8] = &size_number_error;
     
-	error_tab[8] = NULL;
+	error_tab[9] = NULL;
 
     (*error_tab[error_n])();
 }
@@ -95,5 +96,11 @@ not_a_file(void) {
 void
 malloc_failure(void) {
     my_puterror("Erreur lors de l'allocation de mémoire.\n");
+    EXIT;
+}
+
+void
+size_number_error(void) {
+    my_puterror("Erreur sur le nombre envoyé en paramètre. Veuillez entrer un nombre plus petit ou différent de 0.\n");
     EXIT;
 }

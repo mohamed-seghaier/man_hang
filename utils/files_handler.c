@@ -61,3 +61,12 @@ is_file_empty(t_line *game_handler) {
 	select_a_word(game_handler);
 	return 1;
 }
+
+int
+count_size_elem(t_line *game_handler) {
+	for (int i = 0; game_handler->words[i]; i += 1) {
+		if (my_strlen(game_handler->words[i]) < game_handler->char_number) error_functions_send(8);
+	}
+	if (game_handler->char_number == 0) error_functions_send(8);
+	return 1;
+}

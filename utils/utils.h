@@ -34,4 +34,5 @@ char    *get_next_line(void);
 char *my_strcat(char *, char *);
 int is_a_file(t_line *);
 int is_file_empty(t_line *);
+int count_size_elem(t_line *);
 #endif /* !UTILS_H_ */
