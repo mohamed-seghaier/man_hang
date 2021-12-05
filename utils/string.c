@@ -19,7 +19,7 @@ tab_size(char **tab) {
 char *
 from_eol_to_space(char *str) {
     for(int i = 0; str[i]; i += 1) {
-        if (str[i] == ' ') error_functions_send(9);
+        if (str[i] == ' ') error_functions_send(SPACE_ON_FILE);
         if (str[i] == '\n') str[i] = ' ';
     }
     return str;
@@ -75,15 +75,15 @@ char
     int j = 0;
     char **res = NULL;
 
-    if ((res = malloc(sizeof(char *) * count_space(str) + 1)) == NULL) error_functions_send(7);
-    if ((res[j] = malloc(sizeof(char) * count_malloc(str, 0))) == NULL) error_functions_send(7);
+    if ((res = malloc(sizeof(char *) * count_space(str) + 1)) == NULL) error_functions_send(MALLOC_FAIL);
+    if ((res[j] = malloc(sizeof(char) * count_malloc(str, 0))) == NULL) error_functions_send(MALLOC_FAIL);
     for (; str[i]; i += 1) {
         if (str[i] != ' ') {
             res[j][idx] = str[i];
             idx += 1;
         } else {
             j += 1;
-            if ((res[j] = malloc(sizeof(char) * count_malloc(str, j))) == NULL) error_functions_send(7);
+            if ((res[j] = malloc(sizeof(char) * count_malloc(str, j))) == NULL) error_functions_send(MALLOC_FAIL);
             idx = 0;
         }
     }
@@ -104,6 +104,13 @@ count_space(char *str) {
     for (int i = 0; str[i]; i += 1) j += str[i] == ' ' ? 1 : 0;
 
     return j + 1;
+}
+
+void
+my_strcpy(char *restrict dest, char *restrict src) {
+    if ((dest =malloc(sizeof(char) * my_strlen(src) + 1)) == NULL) error_functions_send(MALLOC_FAIL);
+    my_memset(dest, my_strlen(src));
+    for(int i = 0; src[i]; i += 1) dest[i] = src[i];
 }
 
 //StrToWordTab_end

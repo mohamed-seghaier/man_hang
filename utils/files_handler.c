@@ -31,7 +31,7 @@ char
 			return (j == 0 ? NULL : dest);
 		if (tmp[i] == '\n')
 			return (dest);
-		if ((tmp[0]) == 0 || tmp[0] == '\04')
+		if ((tmp[0]) == 0)
 			return (NULL);
 		dest = my_strcat(dest, tmp);
 		j += 1;
@@ -43,7 +43,7 @@ int
 is_a_file(t_line *game_handler) {
     if ((game_handler->fd = open(game_handler->filename, O_RDONLY)) == -1)  {
 		close(game_handler->fd);
-		error_functions_send(5);
+		error_functions_send(OPEN_FAIL);
 	}
 	return 1;
 }
@@ -52,12 +52,13 @@ int
 is_file_empty(t_line *game_handler) {
 	struct stat st;
 
-	if (game_handler->filename == NULL) error_functions_send(7);
-	if ((stat(game_handler->filename, &st)) == -1) error_functions_send(6);
-	if ((game_handler->file_content = malloc (sizeof(char) * st.st_size)) == NULL) error_functions_send(7);
-	if (read(game_handler->fd, game_handler->file_content, st.st_size) == -1) error_functions_send(6);
+	if (game_handler->filename == NULL) error_functions_send(MALLOC_FAIL);
+	if ((stat(game_handler->filename, &st)) == -1) error_functions_send(READ_FAIL);
+	if ((game_handler->file_content = malloc (sizeof(char) * st.st_size)) == NULL) error_functions_send(MALLOC_FAIL);
+	if (read(game_handler->fd, game_handler->file_content, st.st_size) == -1) error_functions_send(READ_FAIL);
 	game_handler->file_content = from_eol_to_space(game_handler->file_content);
 	game_handler->words = my_strtowordtab(game_handler->file_content);
+	my_putstr("Selection d'un mot en cours.\n");
 	select_a_word(game_handler);
 	return 1;
 }
@@ -65,9 +66,9 @@ is_file_empty(t_line *game_handler) {
 int
 count_size_elem(t_line *game_handler) {
 	for (int i = 0; game_handler->words[i]; i += 1) {
-		if (my_strlen(game_handler->words[i]) - 1 < game_handler->char_number) error_functions_send(8);
+		if (my_strlen(game_handler->words[i]) - 1 < game_handler->char_number) error_functions_send(SIZE_NUM);
 	}
-	if (game_handler->char_number == 0) error_functions_send(8);
-	while (my_strlen(game_handler->word) - 1 > game_handler->char_number) select_a_word(game_handler);
+	if (game_handler->char_number == 0) error_functions_send(SIZE_NUM);
+	while (my_strlen(game_handler->word) < game_handler->char_number) select_a_word(game_handler);
 	return 1;
 }

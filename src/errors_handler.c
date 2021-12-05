@@ -4,11 +4,11 @@
 
 int
 p_error(int argc, char **argv, t_line *game_handle) {
-    if ((game_handle->filename = malloc(sizeof(char) * strlen(argv[1]) + 1)) == NULL) error_functions_send(7);
+    if ((game_handle->filename = malloc(sizeof(char) * strlen(argv[1]) + 1)) == NULL) error_functions_send(MALLOC_FAIL);
     if ((strcpy(game_handle->filename, argv[1])) == NULL) EXIT;
-    if (!is_a_file(game_handle)) error_functions_send(3);
-    if (!is_file_empty(game_handle)) error_functions_send(6);
-    if (!is_a_num(game_handle, argv[2])) error_functions_send(2);
+    if (!is_a_file(game_handle)) error_functions_send(NOT_FILE);
+    if (!is_file_empty(game_handle)) error_functions_send(READ_FAIL);
+    if (!is_a_num(game_handle, argv[2])) error_functions_send(NOT_NUM);
     return 1;
 }
 
@@ -22,20 +22,27 @@ void
 error_functions_send(int error_n) {
     ptab_t  error_tab[11];
 
-    error_tab[0] = &too_less_arg_num;
-    error_tab[1] = &too_much_arg_num;
-    error_tab[2] = &not_a_num;
-    error_tab[3] = &not_a_file;
-    error_tab[4] = &bad_argument;
-    error_tab[5] = &open_failure;
-    error_tab[6] = &read_failure;
-    error_tab[7] = &malloc_failure;
-    error_tab[8] = &size_number_error;
-    error_tab[9] = &bad_char;
+    error_tab[LESS_ARG] = &too_less_arg_num;
+    error_tab[MUCH_ARG] = &too_much_arg_num;
+    error_tab[NOT_NUM] = &not_a_num;
+    error_tab[NOT_FILE] = &not_a_file;
+    error_tab[BAD_ARG] = &bad_argument;
+    error_tab[OPEN_FAIL] = &open_failure;
+    error_tab[READ_FAIL] = &read_failure;
+    error_tab[MALLOC_FAIL] = &malloc_failure;
+    error_tab[SIZE_NUM] = &size_number_error;
+    error_tab[SPACE_ON_FILE] = &space_on_file;
+    error_tab[ONECHAR] = &one_char;
     
-	error_tab[10] = NULL;
+	error_tab[NULL__] = NULL;
 
     (*error_tab[error_n])();
+}
+
+void
+one_char(void) {
+    my_puterror("Erreur lors de l'entrée d'une lettre.\n");
+    EXIT;
 }
 
 void
@@ -45,7 +52,7 @@ read_failure(void) {
 }
 
 void
-bad_char(void) {
+space_on_file(void) {
     my_puterror("Espaces interdits dans le fichier.\n");
     EXIT;
 }
@@ -53,9 +60,9 @@ bad_char(void) {
 void
 error_from_argc(int argc) {
     switch (argc) {
-    case 1 : error_functions_send(0);
-    case 2 : error_functions_send(0);
-    default: error_functions_send(1);
+    case 1 : error_functions_send(LESS_ARG);
+    case 2 : error_functions_send(LESS_ARG);
+    default: error_functions_send(MUCH_ARG);
     }
 }
 
@@ -67,7 +74,7 @@ open_failure(void) {
 
 void
 error_from_argv(void) {
-    error_functions_send(5);
+    error_functions_send(OPEN_FAIL);
 }
 
 void

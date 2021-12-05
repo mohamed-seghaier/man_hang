@@ -1,5 +1,6 @@
 SRC	=	./src/main.c				\
 		./src/errors_handler.c		\
+		./src/game.c				\
 		./utils/string.c			\
 		./utils/inputs_f.c			\
 		./utils/files_handler.c		\

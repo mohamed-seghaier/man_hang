@@ -19,6 +19,7 @@ char    **my_strtowordtab(char *);
 char    *from_eol_to_space(char *);
 void    my_memset(char *, int);
 void    select_a_word(t_line *);
+void    my_strcpy(char *restrict, char *restrict);
 
 
 
