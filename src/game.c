@@ -7,6 +7,7 @@ game_loop(t_line *game_handler) {
 
     hide_some_char(game_handler);
     while("Dali") {
+        ascii_art(game_handler->chances);
         my_putstr(game_handler->hidden_word);
         my_putstr("\nEntrez une lettre :\n");
         if ((str = get_next_line()) == ((void*)0)) error_functions_send(ONECHAR);
@@ -19,21 +20,24 @@ game_loop(t_line *game_handler) {
 void
 check_char(char *str, t_line *handle_game) {
     int i = 0;
+    int compteur = 0;
+
     for (i = 0 ; handle_game->word[i]; i += 1) {
         if (str[0] == handle_game->word[i] && handle_game->hidden_word[i] == '_')  {
             step_success(i, handle_game);
-            break;
+            compteur += 1;
         }
     }
-    if (i == my_strlen(handle_game->hidden_word)) step_failure(handle_game);
+    if (compteur == 0) step_failure(handle_game);
 }
 
 void
 step_failure(t_line *handle_game) {
     handle_game->chances -= 1;
-    my_putstr("Cette lettre n'est pas dans le mot.\n");
+    my_putstr("Cette lettre n'est pas dans le mot. Vous perdez une vie. \n");
     if (handle_game->chances == 0) {
         my_putstr("Vous n'avez plus de vies, vous avez perdu !\n");
+        ascii_art(handle_game->chances);
         LOOSE;
     } else {
         my_putstr("Il vous reste ");
@@ -58,6 +62,7 @@ is_finished(char *str) {
 
 void
 finished(int chances) {
+    ascii_art(chances);
     my_putstr("Bravo, vous avez réussi en ayant fait ");
     my_putnbr(3 - chances);
     my_putstr(" erreurs !\n");

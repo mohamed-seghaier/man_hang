@@ -116,3 +116,17 @@ my_strcpy(char *restrict dest, char *restrict src) {
 //StrToWordTab_end
 
 
+void
+ascii_art(int vies) {
+    my_putstr(" o-------o\n");
+    my_putstr(" |       ");
+    my_putstr(vies < 3 ? "|" : " ");
+    my_putstr("\n |       ");
+    my_putstr(vies < 2 ? "|" : " ");
+    my_putstr("\n |       ");
+    my_putstr(vies < 1 ? "|" : " ");
+    my_putstr("\n |       O\n");
+    my_putstr(" |      /|\\\n");
+    my_putstr(" |      / \\\n");
+    my_putstr("/-\\\n");
+}

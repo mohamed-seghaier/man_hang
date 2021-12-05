@@ -27,6 +27,7 @@ typedef struct s_line {
     char    **words;
     char    *word;
     char    *hidden_word;
+    char    **ascii;
     int char_number;
     int fd;
     int chances;

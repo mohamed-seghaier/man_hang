@@ -8,6 +8,7 @@
 typedef struct s_line t_line;
 
 //string.c
+void    ascii_art(int);
 int is_a_num(t_line *, char *);
 int my_strlen(char*);
 int my_getnbr(char *);
