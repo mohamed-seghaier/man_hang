@@ -19,6 +19,7 @@
 #define FALSE 0
 #define EXIT exit(84)
 #define WIN exit(1)
+#define LOOSE exit(1)
 
 typedef struct s_line {
     char    *filename;
@@ -41,5 +42,6 @@ void    hide_some_char(t_line *);
 void    check_char(char *, t_line *);
 void    step_success(int, t_line *);
 void    finished(int);
+void    step_failure(t_line *);
 
 #endif /* !MY_H_ */

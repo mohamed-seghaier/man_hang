@@ -18,8 +18,27 @@ game_loop(t_line *game_handler) {
 
 void
 check_char(char *str, t_line *handle_game) {
-    for (int i = 0; handle_game->word[i]; i += 1) {
-        if (str[0] == handle_game->word[i] && handle_game->hidden_word[i] == '_') step_success(i, handle_game);
+    int i = 0;
+    for (i = 0 ; handle_game->word[i]; i += 1) {
+        if (str[0] == handle_game->word[i] && handle_game->hidden_word[i] == '_')  {
+            step_success(i, handle_game);
+            break;
+        }
+    }
+    if (i == my_strlen(handle_game->hidden_word)) step_failure(handle_game);
+}
+
+void
+step_failure(t_line *handle_game) {
+    handle_game->chances -= 1;
+    my_putstr("Cette lettre n'est pas dans le mot.\n");
+    if (handle_game->chances == 0) {
+        my_putstr("Vous n'avez plus de vies, vous avez perdu !\n");
+        LOOSE;
+    } else {
+        my_putstr("Il vous reste ");
+        my_putnbr(handle_game->chances);
+        my_putstr(" vies.\n");
     }
 }
 
